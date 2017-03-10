@@ -1,0 +1,10 @@
+[backend_servers]
+192.168.50.12 ansible_ssh_user=ubuntu
+
+[app_servers]
+192.168.50.11 ansible_ssh_user=ubuntu
+192.168.50.13 ansible_ssh_user=ubuntu
+
+[haproxy]
+192.168.50.10 ansible_ssh_user=ubuntu
+192.168.50.14 ansible_ssh_user=ubuntu

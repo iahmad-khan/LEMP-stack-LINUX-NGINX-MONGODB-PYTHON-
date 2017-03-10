@@ -1,0 +1,30 @@
+---
+- name: install-mongodb-on-ubuntu
+  hosts: backend_servers
+  become: yes
+
+  tasks:
+
+    - name: Import MongoDB public GPG Key
+      apt_key:
+        keyserver: keyserver.ubuntu.com
+        id: EA312927
+
+    - name: Add MongoDB repository into sources list
+      apt_repository:
+        repo: deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse
+        state: present
+
+    - name: Install MongoDB package
+      apt:
+        name: mongodb-org
+        update_cache: yes
+
+    - name: Copy Configuration file
+      copy: src=./conf/mongod.conf dest=/etc/mongod.conf
+
+    - name: Copy unit service file
+      copy: src=./conf/mongodb.service dest=/etc/systemd/system/mongodb.service
+
+    - name: Restart mongod
+      shell: systemctl restart mongodb.service

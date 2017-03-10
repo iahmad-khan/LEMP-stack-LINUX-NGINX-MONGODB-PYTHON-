@@ -1,0 +1,9 @@
+<form action="/new" method="POST">
+<input type="submit" value="Send Server Name to Mongodb"></input>
+</form>
+
+{% for item in items %}
+  <h1> {{ item.name }} </h1>
+  <p> {{ item.description }} <p>
+{% endfor %}
+

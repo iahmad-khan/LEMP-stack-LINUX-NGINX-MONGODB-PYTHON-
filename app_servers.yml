@@ -1,0 +1,73 @@
+---
+- name: set up web and app
+  hosts: app_servers
+  become: yes
+  
+  tasks:
+
+    - name: Get aptitude for upgrade
+      apt: pkg=aptitude state=present
+
+    - name: Safe system upgrade via aptitude
+      apt: upgrade=safe
+
+    - name: install base packages
+      apt: pkg={{item}} state=present update_cache=yes
+      with_items:
+        - python
+        - python-pip
+        - git
+        - nginx
+        - gunicorn
+        - supervisor
+        - python-virtualenv
+
+    - name: Install python app requirements
+      pip: name={{item}} state=present
+      with_items:
+        - Flask==0.10.1
+        - pymongo
+        - Flask-PyMongo
+        - pytz
+
+    - name: Clean up sites
+      shell: unlink /etc/nginx/sites-enabled/* && rm -rf /etc/nginx/sites-available/*
+    
+    - name: Cope conf file
+      copy: src=./conf/nginx-testapp dest=/etc/nginx/sites-available/testapp
+
+    - name: Make symlink
+      shell: ln -s /etc/nginx/sites-available/testapp  /etc/nginx/sites-enabled/testapp
+
+    - name: Restart nginx
+      shell: systemctl restart nginx
+
+    - name: Create dir for python env
+      shell: mkdir -p /home/www 
+ 
+    - name: Create the environment
+      shell: cd /home/www  && virtualenv env
+
+    - name: Activate the environment
+      shell: cd /home/www && chmod +x ./env/bin/activate && ./env/bin/activate
+
+    - name: Make app dir
+      shell: mkdir -p /home/www/testapp
+
+    - name: Make app templates dir
+      shell: mkdir -p /home/www/testapp/templates
+
+    - name: Copy app file
+      copy: src=./testapp/app.py dest=/home/www/testapp/app.py
+
+    - name: Copy html file
+      copy: src=./testapp/index.html dest=/home/www/testapp/templates/index.html
+
+    - name: Copy supervisor conf file
+      copy: src=./conf/supervisor.conf dest=/etc/supervisor/conf.d/testapp.conf
+
+    - name: Start supervisord
+      shell: supervisord -c /etc/supervisor/supervisord.conf
+
+    - name: Reread conf
+      shell: supervisorctl reload

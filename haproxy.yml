@@ -1,0 +1,54 @@
+---
+- name: Haproxy and Keepalived for HA and Load Balancing
+  hosts: haproxy
+  become: yes
+  vars: 
+    myDict: {"node-1": "101", "node-5": "100"}
+    priority: '{{myDict[ansible_hostname]}}'  
+  
+  tasks:
+
+    - name: Get aptitude for upgrade
+      apt: pkg=aptitude state=present
+
+    - name: Safe system upgrade via aptitude
+      apt: upgrade=safe
+
+    - name: Install base packages
+      apt: pkg={{item}} state=present update_cache=yes
+      with_items:
+        - python
+        - keepalived
+        - haproxy
+
+    - name: Update sysctl.conf for keepalived vip to work
+      shell: echo "net.ipv4.ip_nonlocal_bind=1" >> /etc/sysctl.conf
+
+    - name: Update sysctl
+      shell: sysctl -p
+
+    - name: Update haproxy default file
+      shell: echo "ENABLED=1" >>/etc/default/haproxy
+
+    - name: ensure keepalived is running
+      service: name=keepalived state=started
+
+    - name: ensure haproxy is running
+      service: name=haproxy state=started
+
+    - name: Copy haproxy conf file
+      copy: src=conf/haproxy.cfg dest=/etc/haproxy/haproxy.cfg
+      notify:
+      - restart haproxy
+
+    - name: Copy keepalived conf file
+      template: src=./conf/keepalived.j2 dest=/etc/keepalived/keepalived.conf
+      notify:
+      - restart keepalived
+
+  handlers:
+    - name: restart keepalived
+      service: name=keepalived state=restarted
+
+    - name: restart haproxy
+      service: name=haproxy state=restarted
