@@ -1,0 +1,90 @@
+#!/bin/bash
+apt-get update
+apt-get install -y python-pip
+apt-get install -y git
+apt-get install -y nginx
+apt-get install -y gunicorn
+apt-get install -y supervisor
+pip install flask
+pip install pymongo
+pip install Flask-PyMongo
+pip install pytz
+mkdir -p /home/flask/testapp
+
+
+
+
+
+
+ 88  apt-get install -y python python-pip python-virtualenv nginx gunicorn
+   89  mkdir /home/www
+   90  cd /home/www/
+   91  virtualenv env
+   92  source env/bin/activate
+   93  pip install Flask==0.10.1
+   94  mkdir flask_project && cd flask_project
+   95  ls
+   96  pwd
+   97  nano app.py
+   98  mkdir static
+   99  nano static/index.html
+  100  rm /etc/nginx/sites-enabled/default
+  101  rm /etc/nginx/sites-enabled/testapp 
+  102  touch /etc/nginx/sites-available/flask_project
+  103  ln -s /etc/nginx/sites-available/flask_project /etc/nginx/sites-enabled/flask_project
+  104  nano /etc/nginx/sites-available/flask_project
+  105  sudo /etc/init.d/nginx restart
+  106  cd /home/www/flask_project/
+  107  ls
+  108  gunicorn app:app -b localhost:8000
+  109  nano /etc/nginx/sites-available/flask_project 
+  110  service nginx restart
+  111  curl localhost
+  112  curl localhost/static
+  113  curl localhost/static/index.html
+  114  nano /etc/nginx/sites-available/flask_project 
+  115  service nginx restart
+  116  nano /etc/nginx/sites-available/flask_project 
+  117  service nginx restart
+  118  curl localhost/static/index.html
+  119  curl localhost/static
+  120  curl localhost/static/
+  121  curl localhost/static/index.hmtl
+  122  curl localhost/static/index.html
+  123  nano /etc/nginx/sites-available/flask_project 
+  124  service nginx restart
+  125  curl localhost/static/index.html
+  126  curl localhost/static
+  127  curl localhost/static/
+  128  nano /etc/supervisor/conf.d/flask_project.conf
+  129  adduser newuser
+  130  adduser newuser sudo
+  131  su newuser
+  132  service nginx restart
+  133  cd /home/www/flask_project/
+  134  supervisorctl reread
+  135  supervisorctl 
+  136  supervisord --help
+  137  supervisord -c /etc/supervisor/conf.d/flask_project.conf 
+  138  supervisord
+  139  supervisord -c /etc/supervisor/supervisord.conf 
+  140  pkill gunicorn
+  141  supervisord -c /etc/supervisor/supervisord.conf 
+  142  nano /etc/supervisor/supervisord.conf 
+  143  ss -tln
+  144  supervisord -c /etc/supervisor/supervisord.conf 
+  145  supervisor -h
+  146  supervisord -h
+  147  supervisorctl 
+  148  sudo service supervisord start
+  149  sudo supervisorctl reload
+  150  supervisorctl 
+  151  nano app.py
+  152  python
+  153  nano app.py
+  154  sudo supervisorctl reload
+  155  nano app.py
+  156  nano templates/index.html 
+  157  service nginx restart
+  158  sudo supervisorctl reload
+
