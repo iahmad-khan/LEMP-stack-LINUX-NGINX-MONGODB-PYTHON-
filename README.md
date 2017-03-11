@@ -74,7 +74,7 @@ Also notice that in different sessions , you will be hitting different app serve
 
 Also check that app servers are highly available by rebooting one of them. haproxy will notice it and will not 
 send further requests to it untill it come healthy again.
-
+Note: For now haproxy is checking port 80 for health check , so if the python app which is serving on different port , is down , then haproxy will not know it. Therefore in this case it is checking nginx.
 
 Thanks.
 
