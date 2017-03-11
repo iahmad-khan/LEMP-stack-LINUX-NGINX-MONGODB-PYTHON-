@@ -30,6 +30,17 @@
         - Flask-PyMongo
         - pytz
 
+    - name: Enable Nginx
+      service: name=nginx enabled=yes
+
+    - name: Start Nginx
+      service: name=nginx state=started
+
+    - name: Start supervisord
+      shell: supervisord -c /etc/supervisor/supervisord.conf
+      args:
+        creates: /var/run/supervisor.sock
+
     - name: Clean up sites
       shell: unlink /etc/nginx/sites-enabled/* && rm -rf /etc/nginx/sites-available/*
     
@@ -37,13 +48,15 @@
       copy: src=./conf/nginx-testapp dest=/etc/nginx/sites-available/testapp
 
     - name: Make symlink
-      shell: ln -s /etc/nginx/sites-available/testapp  /etc/nginx/sites-enabled/testapp
-
-    - name: Restart nginx
-      shell: systemctl restart nginx
+      file:
+        src: /etc/nginx/sites-available/testapp  
+        dest: /etc/nginx/sites-enabled/testapp
+        state: link
+      notify:
+      - restart Nginx
 
     - name: Create dir for python env
-      shell: mkdir -p /home/www 
+      file: name=/home/www state=directory 
  
     - name: Create the environment
       shell: cd /home/www  && virtualenv env
@@ -52,10 +65,10 @@
       shell: cd /home/www && chmod +x ./env/bin/activate && ./env/bin/activate
 
     - name: Make app dir
-      shell: mkdir -p /home/www/testapp
+      file: name=/home/www/testapp state=directory
 
     - name: Make app templates dir
-      shell: mkdir -p /home/www/testapp/templates
+      file: name=/home/www/testapp/templates state=directory
 
     - name: Copy app file
       copy: src=./testapp/app.py dest=/home/www/testapp/app.py
@@ -65,9 +78,12 @@
 
     - name: Copy supervisor conf file
       copy: src=./conf/supervisor.conf dest=/etc/supervisor/conf.d/testapp.conf
+      notify:
+        - reload Supervisord
 
-    - name: Start supervisord
-      shell: supervisord -c /etc/supervisor/supervisord.conf
+  handlers:
+    - name: restart Nginx
+      service: name=nginx state=restarted
 
-    - name: Reread conf
+    - name: reload Supervisord
       shell: supervisorctl reload
