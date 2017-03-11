@@ -2,7 +2,7 @@
 
 **Loader balancer nodes with haproxy and Keepalived:**
 
-node-1.vagrant   192.168.50.10         ( master)
+node-1.vagrant   192.168.50.10         ( Master)
 
 node-5.vagrant    192.168.50.14        (Slave)
 
@@ -68,7 +68,7 @@ Now reboot the master load balancer node-1.vagrant down
 and you will still be able to get the page and data from mongoldb. When master reboots , it will take the virtual ip again , but all this process will not be noticed by end user.
 
 
-Also notice that in different sessions , you will be hitting different app servers , which is load balancing done by HA.
+Also notice that in different sessions , you will be hitting different app servers , which is load balancing done by Haproxy.
 
 
 Also check that app servers are highly available by rebooting one of them. haproxy will notice it and will not 
