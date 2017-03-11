@@ -76,6 +76,27 @@ Also check that app servers are highly available by rebooting one of them. hapro
 send further requests to it untill it come healthy again.
 Note: For now haproxy is checking port 80 for health check , so if the python app which is serving on different port , is down , then haproxy will not know it. Therefore in this case it is checking nginx.
 
+
+Tested On:
+
+Darwin Kernel Version 16.0.0: Mon Aug 29 17:56:20 PDT 2016; root:xnu-3789.1.32~3/RELEASE_X86_64 x86_64
+
+ansible 2.2.1.0
+
+Vagrant 1.9.1
+
+Oracle VM VirtualBox web service Version 5.1.16
+
+(C) 2007-2017 Oracle Corporation
+All rights reserved.
+5.1.16r113841
+
+
+
+
+
+
+
 Thanks.
 
 
