@@ -93,7 +93,21 @@ All rights reserved.
 
 
 
+Suggested Improvements that can be made:
+
+- Currently the ip addresses in config files are hard coded , that can be replaced with variables
+  so that the enviromenet can auto scale to any number of nodes on any layer ,e.g load balancers , app servers
+  and database servers
+
+- Supervisord to be managed to work with systemd so that it can be enabled properly by systemd at system boot
+
+- The backend database layer can be scaled by deploying more than node node with proper configuration,
+  currently the backend database layer is a single point of failure. In case of mongodb it is relatively
+  easy to scale this layer as compared to RDBMS solutions.
+
+- The keepalived configuration is done to work with two nodes for now, with master has the priorty 101 , and slave with
+  priority 100 , it can be configured to have more than one slave nodes.  
 
 
 
-Thanks.
+
