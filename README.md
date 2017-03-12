@@ -37,20 +37,21 @@ First done by doing manual configuration and testing , then converted to shell s
 
 **Testing:**
 
-    - clone the bitbucket repo
+    - git clone git@bitbucket.org:iahmad-khan/web-stack-ijaz-ahmad.git
 
-    - cd into the repo
+    - cd web-stack-ijaz-ahmad
 
     - vagrant up
 
 
-Run the playbooks:
+Run the playbooks
 
-  - ansible-playbook backend.yml -i hosts
 
-  - ansible-playbook app_servers.yml -i hosts
+    - ansible-playbook backend.yml -i hosts
 
-  - ansible-playbook haproxy.yml -i hosts
+    - ansible-playbook app_servers.yml -i hosts
+
+    - ansible-playbook haproxy.yml -i hosts
 
 
 (In case of shh problems: rm -rf ~/.ssh/known_hosts , 
