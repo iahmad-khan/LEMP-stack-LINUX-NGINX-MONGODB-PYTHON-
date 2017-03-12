@@ -90,7 +90,7 @@ Note: For now haproxy is checking port 80 for health check , so if the python ap
 
 
 
-Suggested Improvements that can be made:
+**Suggested Improvements that can be made:**
 
 - Currently the ip addresses in config files are hard coded , that can be replaced with variables
   so that the enviromenet can auto scale to any number of nodes on any layer ,e.g load balancers , app servers
