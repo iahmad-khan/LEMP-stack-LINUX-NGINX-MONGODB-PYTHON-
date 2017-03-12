@@ -104,3 +104,5 @@ Note: For now haproxy is checking port 80 for health check , so if the python ap
 
 - The keepalived configuration is done to work with two nodes for now, with master has the priorty 101 , and slave with
   priority 100 , it can be configured to have more than one slave nodes.
+
+- Using ansible modules for nginx and haproxy deployment
