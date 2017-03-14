@@ -106,3 +106,5 @@ Note: For now haproxy is checking port 80 for health check , so if the python ap
   priority 100 , it can be configured to have more than one slave nodes.
 
 - Using ansible modules for nginx and haproxy deployment
+
+- Writing a separate ansible module to manage a mongodb cluster with replication and sharding
