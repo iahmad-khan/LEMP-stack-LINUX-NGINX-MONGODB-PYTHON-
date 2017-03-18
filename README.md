@@ -108,3 +108,7 @@ Note: For now haproxy is checking port 80 for health check , so if the python ap
 - Using ansible modules for nginx and haproxy deployment
 
 - Writing a separate ansible module to manage a mongodb cluster with replication and sharding
+
+- OpenStack vagrant provisioner can be used for creating this setup in openstack instead of vbox
+
+- One other alternative approach is to use docker and kubernetes for this whole deployement
