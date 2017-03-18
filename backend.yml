@@ -23,11 +23,8 @@
     - name: Copy unit service file
       copy: src=./conf/mongodb.service dest=/etc/systemd/system/mongodb.service
 
-    - name: Enable MongoDB service
-      service: name=mongodb enabled=yes
-
     - name: Start MongoDB service
-      service: name=mongodb state=started
+      service: name=mongodb state=started enabled=yes
 
     - name: Copy Configuration file
       copy: src=./conf/mongod.conf dest=/etc/mongod.conf

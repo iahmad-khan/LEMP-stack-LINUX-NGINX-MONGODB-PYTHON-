@@ -30,11 +30,8 @@
         - Flask-PyMongo
         - pytz
 
-    - name: Enable Nginx
-      service: name=nginx enabled=yes
-
     - name: Start Nginx
-      service: name=nginx state=started
+      service: name=nginx state=started enabled=yes
 
     - name: Start supervisord
       shell: supervisord -c /etc/supervisor/supervisord.conf

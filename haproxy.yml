@@ -30,17 +30,11 @@
     - name: Update haproxy default file
       shell: echo "ENABLED=1" >>/etc/default/haproxy
 
-    - name: Enable keepalived
-      service: name=keepalived enabled=yes
-
-    - name: Enable haproxy
-      service: name=haproxy enabled=yes
-
     - name: Ensure keepalived is running
-      service: name=keepalived state=started
+      service: name=keepalived state=started enabled=yes
 
     - name: Ensure haproxy is running
-      service: name=haproxy state=started
+      service: name=haproxy state=started enabled=yes
 
     - name: Copy haproxy conf file
       copy: src=conf/haproxy.cfg dest=/etc/haproxy/haproxy.cfg
