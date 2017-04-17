@@ -1,6 +1,6 @@
 **Setup Info:**
 
-**Loader balancer nodes with haproxy and Keepalived:**
+**Load balancer nodes with haproxy and Keepalived:**
 
     - node-1.vagrant   192.168.50.10         ( Master)
 
